@@ -1,21 +1,15 @@
-import { Menu, Typography, Card } from 'antd'
+import { Menu, Typography, Card, Tabs, Upload } from 'antd'
 import Layout, { Content, Footer, Header } from 'antd/lib/layout/layout'
-import React from 'react'
+import React, { useState } from 'react'
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
+import ImageFile from '../component/ImageFile'
+import ResultItem from '../component/ResultItem'
 
 function Main() {
-    const { Text, Link } = Typography
-    const tabList = [
-        {
-            key: 'image',
-            tab: 'Image'
-        },
-        {
-            key: 'url',
-            tab: 'Url Image'
-        }
-    ]
+    const { Text, Link, Title } = Typography
+    const [loading, setLoading] = useState(false)
+    const [result, setResult] = useState([])
 
-    console.log(process.env.PUBLIC_URL + '/whut-logo.png')
     return (
         <div>
             <Layout>
@@ -29,9 +23,26 @@ function Main() {
                     </Menu>
                 </Header>
                 <Content style={{ padding: '50px 100px' }}>
-                    <Card tabList={tabList}>
-
+                    <Card style={{ minHeight: '75vh' }}>
+                        <Tabs defaultActiveKey="upload" centered>
+                            <Tabs.TabPane disabled={loading} tab="Upload Image" key="upload">
+                                <ImageFile loading={loading} setResult={setResult} setLoading={setLoading} />
+                            </Tabs.TabPane>
+                            <Tabs.TabPane disabled={loading} tab="From URL" key="url">
+                                Url
+                            </Tabs.TabPane>
+                        </Tabs>
                     </Card>
+                    <Title style={{ margin: '10px', textAlign: 'center' }} level={2}>Your Result</Title>
+                    <div>
+                        {
+                            result.map((item, index) => {
+                                return (
+                                    <ResultItem key={index} {...item} />
+                                )
+                            })
+                        }
+                    </div>
                 </Content>
                 <Footer style={{ background: '#001529', textAlign: 'center' }}>
                     <Text italic style={{ color: 'white' }} >Dibuat oleh <Link href="http://github.com/ridwanal24">Orang Ini</Link> </Text>
