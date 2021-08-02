@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Button, Typography, message, Switch } from 'antd'
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
-import FormData from 'form-data'
+import { GlobalOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons'
+import { message, Button, Switch, Typography, Input } from 'antd'
 
-function ImageFile({ loading, setLoading, setResult }) {
+function ImageUrl({ loading, setLoading, setResult }) {
     const { Text } = Typography
     const [imgUrl, setImgUrl] = useState('')
     const [imgObj, setImgObj] = useState('')
@@ -27,15 +26,8 @@ function ImageFile({ loading, setLoading, setResult }) {
         </React.Fragment>
     )
 
-    const handleChange = (item) => {
-        setImgSize(item.target.files[0].size)
-        setImgObj(item.target.files[0])
-        const reader = new FileReader()
-        reader.addEventListener('load', () => {
-            setImgUrl(reader.result)
-        })
-
-        reader.readAsDataURL(item.target.files[0])
+    const handleChange = (e) => {
+        setImgUrl(e.target.value)
     }
 
     const handleSubmit = async () => {
@@ -44,23 +36,14 @@ function ImageFile({ loading, setLoading, setResult }) {
             message.error('Please choose image')
             return
         }
-        if (imgSize > 9000000) {
-            message.error('Image must be lower than 9 MB')
-            return
-        }
 
-        const formData = new FormData()
-        formData.append('image', imgObj)
-        formData.append('cutBorder', blackBorder)
+
         try {
-            const res = await fetch('https://api.trace.moe/search?anilistInfo', {
-                method: 'post',
-                body: formData
-            })
+            const res = await fetch(`https://api.trace.moe/search?anilistInfo&url=${encodeURIComponent(imgUrl)}${blackBorder ? '&cutBorder' : ''}`)
 
             const data = await res.json()
             setResult(data.result)
-
+            // console.log(data)
         } catch (e) {
             console.log(e.message)
         } finally {
@@ -72,22 +55,20 @@ function ImageFile({ loading, setLoading, setResult }) {
     return (
         <div style={{ textAlign: 'center' }}>
             <div
-                onClick={_ => document.querySelector('[name=choose_image]').click()}
                 style={imageStyle}
             >
                 {
                     !imgUrl ? (
                         <React.Fragment>
-                            <PlusOutlined style={{ fontSize: '1.5rem', color: '#C5C5C5' }} />
-
-                            <Text style={{ display: 'block', marginTop: '-20vw', fontSize: '0.5rem' }} type="secondary" italic>Choose image</Text>
+                            <Text style={{ display: 'block', fontSize: '0.5rem' }} type="secondary" italic>Your image</Text>
                         </React.Fragment>
                     ) : (
                         loading ? loadingUploadComp : ''
                     )
                 }
             </div>
-            <input disabled={loading} type="file" onChange={handleChange} style={{ display: 'none' }} name="choose_image" />
+            <br />
+            <Input prefix={<GlobalOutlined />} onChange={handleChange} value={imgUrl} placeholder="Type image url" size="large" ></Input>
             <Button disabled={loading} style={{ marginTop: '20px' }} onClick={handleSubmit} type="primary">Search</Button>
             <br />
             <br />
@@ -99,4 +80,4 @@ function ImageFile({ loading, setLoading, setResult }) {
     )
 }
 
-export default ImageFile
+export default ImageUrl

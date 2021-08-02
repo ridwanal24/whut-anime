@@ -1,8 +1,8 @@
-import { Menu, Typography, Card, Tabs, Upload } from 'antd'
+import { Menu, Typography, Card, Tabs, Row, Col } from 'antd'
 import Layout, { Content, Footer, Header } from 'antd/lib/layout/layout'
 import React, { useState } from 'react'
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import ImageFile from '../component/ImageFile'
+import ImageUrl from '../component/ImageUrl'
 import ResultItem from '../component/ResultItem'
 
 function Main() {
@@ -22,27 +22,31 @@ function Main() {
                         <Menu.Item key="about">About</Menu.Item>
                     </Menu>
                 </Header>
-                <Content style={{ padding: '50px 100px' }}>
-                    <Card style={{ minHeight: '75vh' }}>
-                        <Tabs defaultActiveKey="upload" centered>
-                            <Tabs.TabPane disabled={loading} tab="Upload Image" key="upload">
-                                <ImageFile loading={loading} setResult={setResult} setLoading={setLoading} />
-                            </Tabs.TabPane>
-                            <Tabs.TabPane disabled={loading} tab="From URL" key="url">
-                                Url
-                            </Tabs.TabPane>
-                        </Tabs>
-                    </Card>
-                    <Title style={{ margin: '10px', textAlign: 'center' }} level={2}>Your Result</Title>
-                    <div>
-                        {
-                            result.map((item, index) => {
-                                return (
-                                    <ResultItem key={index} {...item} />
-                                )
-                            })
-                        }
-                    </div>
+                <Content style={{ padding: '50px 0' }}>
+                    <Row justify="center">
+                        <Col lg={16} md={18} sm={20} xs={22} >
+                            <Card style={{ minHeight: '75vh' }}>
+                                <Tabs defaultActiveKey="upload" centered>
+                                    <Tabs.TabPane disabled={loading} tab="Upload Image" key="upload">
+                                        <ImageFile loading={loading} setResult={setResult} setLoading={setLoading} />
+                                    </Tabs.TabPane>
+                                    <Tabs.TabPane disabled={loading} tab="From URL" key="url">
+                                        <ImageUrl loading={loading} setResult={setResult} setLoading={setLoading} />
+                                    </Tabs.TabPane>
+                                </Tabs>
+                            </Card>
+                            <Title style={{ margin: '10px', textAlign: 'center' }} level={2}>Your Result</Title>
+                            <div>
+                                {
+                                    result.map((item, index) => {
+                                        return (
+                                            <ResultItem key={index} {...item} />
+                                        )
+                                    })
+                                }
+                            </div>
+                        </Col>
+                    </Row>
                 </Content>
                 <Footer style={{ background: '#001529', textAlign: 'center' }}>
                     <Text italic style={{ color: 'white' }} >Dibuat oleh <Link href="http://github.com/ridwanal24">Orang Ini</Link> </Text>
