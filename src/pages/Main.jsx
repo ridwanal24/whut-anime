@@ -1,6 +1,6 @@
 import { Menu, Typography, Card, Tabs, Row, Col } from 'antd'
 import Layout, { Content, Footer, Header } from 'antd/lib/layout/layout'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ImageFile from '../component/ImageFile'
 import ImageUrl from '../component/ImageUrl'
 import ResultItem from '../component/ResultItem'

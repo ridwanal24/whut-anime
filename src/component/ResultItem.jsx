@@ -1,9 +1,9 @@
 import React from 'react'
 import { Card, Typography, Button, Tooltip, Popover } from 'antd'
-import { InfoCircleOutlined, InfoCircleTwoTone } from '@ant-design/icons'
+import { InfoCircleTwoTone } from '@ant-design/icons'
 
 function ResultItem({ anilist, episode, filename, from, image, similarity, to, video }) {
-    const { Text, Paragraph, Title, Link } = Typography
+    const { Paragraph, Title, Link } = Typography
     const { id, idMal, isAdult, synonyms, title } = anilist
     const { english, native, romaji } = title
     const popOverContent = (
@@ -27,7 +27,7 @@ function ResultItem({ anilist, episode, filename, from, image, similarity, to, v
 
         const validate = (angka) => {
             angka = `${angka}`
-            angka = angka.length == 1 ? `0${angka}` : angka
+            angka = angka.length === 1 ? `0${angka}` : angka
             return angka
         }
 

@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import { GlobalOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons'
+import { GlobalOutlined, LoadingOutlined } from '@ant-design/icons'
 import { message, Button, Switch, Typography, Input, Select } from 'antd'
 
 function ImageUrl({ loading, setLoading, setResult, fetchAnilist, anilist, setAnilistId, anilistId }) {
     const { Text, Paragraph } = Typography
     const { Option } = Select
     const [imgUrl, setImgUrl] = useState('')
-    const [imgObj, setImgObj] = useState('')
-    const [imgSize, setImgSize] = useState('')
     const [blackBorder, setBlackBorder] = useState(false)
     const imageStyle = {
         borderRadius: '10px',
