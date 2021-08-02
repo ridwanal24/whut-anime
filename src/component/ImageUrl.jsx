@@ -30,12 +30,12 @@ function ImageUrl({ loading, setLoading, setResult, fetchAnilist, anilist, setAn
     }
 
     const handleSubmit = async () => {
-        setLoading(true)
         if (!imgUrl) {
-            message.error('Please choose image')
+            message.error('Please fill image url')
             return
         }
 
+        setLoading(true)
 
         try {
             const res = await fetch(`https://api.trace.moe/search?anilistInfo&url=${encodeURIComponent(imgUrl)}${blackBorder ? '&cutBorder' : ''}${anilistId ? '&anilistID=' + anilistId : ''}`)

@@ -41,7 +41,6 @@ function ImageFile({ loading, setLoading, setResult, anilist, setAnilist, anilis
     }
 
     const handleSubmit = async () => {
-        setLoading(true)
         if (!imgUrl) {
             message.error('Please choose image')
             return
@@ -50,6 +49,7 @@ function ImageFile({ loading, setLoading, setResult, anilist, setAnilist, anilis
             message.error('Image must be lower than 9 MB')
             return
         }
+        setLoading(true)
 
         const formData = new FormData()
         formData.append('image', imgObj)
