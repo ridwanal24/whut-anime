@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.js": "/whut-anime/static/js/main.db33c7b1.chunk.js",
-    "main.js.map": "/whut-anime/static/js/main.db33c7b1.chunk.js.map",
-    "runtime-main.js": "/whut-anime/static/js/runtime-main.2a801e17.js",
-    "runtime-main.js.map": "/whut-anime/static/js/runtime-main.2a801e17.js.map",
+    "main.js": "/whut-anime/static/js/main.0ec4aec9.chunk.js",
+    "main.js.map": "/whut-anime/static/js/main.0ec4aec9.chunk.js.map",
+    "runtime-main.js": "/whut-anime/static/js/runtime-main.b1902ed4.js",
+    "runtime-main.js.map": "/whut-anime/static/js/runtime-main.b1902ed4.js.map",
     "static/css/2.83a79fa7.chunk.css": "/whut-anime/static/css/2.83a79fa7.chunk.css",
-    "static/js/2.807a7fdb.chunk.js": "/whut-anime/static/js/2.807a7fdb.chunk.js",
-    "static/js/2.807a7fdb.chunk.js.map": "/whut-anime/static/js/2.807a7fdb.chunk.js.map",
-    "static/js/3.694f0ac5.chunk.js": "/whut-anime/static/js/3.694f0ac5.chunk.js",
-    "static/js/3.694f0ac5.chunk.js.map": "/whut-anime/static/js/3.694f0ac5.chunk.js.map",
+    "static/js/2.78d6a682.chunk.js": "/whut-anime/static/js/2.78d6a682.chunk.js",
+    "static/js/2.78d6a682.chunk.js.map": "/whut-anime/static/js/2.78d6a682.chunk.js.map",
+    "static/js/3.a5984f7a.chunk.js": "/whut-anime/static/js/3.a5984f7a.chunk.js",
+    "static/js/3.a5984f7a.chunk.js.map": "/whut-anime/static/js/3.a5984f7a.chunk.js.map",
     "index.html": "/whut-anime/index.html",
     "static/css/2.83a79fa7.chunk.css.map": "/whut-anime/static/css/2.83a79fa7.chunk.css.map",
-    "static/js/2.807a7fdb.chunk.js.LICENSE.txt": "/whut-anime/static/js/2.807a7fdb.chunk.js.LICENSE.txt"
+    "static/js/2.78d6a682.chunk.js.LICENSE.txt": "/whut-anime/static/js/2.78d6a682.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.2a801e17.js",
+    "static/js/runtime-main.b1902ed4.js",
     "static/css/2.83a79fa7.chunk.css",
-    "static/js/2.807a7fdb.chunk.js",
-    "static/js/main.db33c7b1.chunk.js"
+    "static/js/2.78d6a682.chunk.js",
+    "static/js/main.0ec4aec9.chunk.js"
   ]
 }
