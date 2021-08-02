@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { GlobalOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons'
-import { message, Button, Switch, Typography, Input } from 'antd'
+import { message, Button, Switch, Typography, Input, Select } from 'antd'
 
-function ImageUrl({ loading, setLoading, setResult }) {
-    const { Text } = Typography
+function ImageUrl({ loading, setLoading, setResult, fetchAnilist, anilist, setAnilistId, anilistId }) {
+    const { Text, Paragraph } = Typography
+    const { Option } = Select
     const [imgUrl, setImgUrl] = useState('')
     const [imgObj, setImgObj] = useState('')
     const [imgSize, setImgSize] = useState('')
@@ -39,7 +40,7 @@ function ImageUrl({ loading, setLoading, setResult }) {
 
 
         try {
-            const res = await fetch(`https://api.trace.moe/search?anilistInfo&url=${encodeURIComponent(imgUrl)}${blackBorder ? '&cutBorder' : ''}`)
+            const res = await fetch(`https://api.trace.moe/search?anilistInfo&url=${encodeURIComponent(imgUrl)}${blackBorder ? '&cutBorder' : ''}${anilistId ? '&anilistID=' + anilistId : ''}`)
 
             const data = await res.json()
             setResult(data.result)
@@ -68,8 +69,19 @@ function ImageUrl({ loading, setLoading, setResult }) {
                 }
             </div>
             <br />
-            <Input prefix={<GlobalOutlined />} onChange={handleChange} value={imgUrl} placeholder="Type image url" size="large" ></Input>
-            <Button disabled={loading} style={{ marginTop: '20px' }} onClick={handleSubmit} type="primary">Search</Button>
+            <Input disabled={loading} prefix={<GlobalOutlined />} onChange={handleChange} value={imgUrl} placeholder="Type image url" size="large" ></Input>
+            <Input onChange={e => fetchAnilist(e.target.value)} style={{ width: '20vw' }} placeholder="Type here for search anime name" />
+            <Select disabled={loading} loading={loading} onSelect={e => setAnilistId(e)} style={{ marginTop: '20px', marginBottom: '10px', width: '20vw' }} >
+                {
+                    !anilist ? (
+                        <Option disabled>Type for search</Option>
+                    ) : (
+                        anilist.map(item => <Option value={item.id} >{item.title.romaji}</Option>)
+                    )
+                }
+            </Select>
+            <Paragraph type="secondary" >Type anime name then select from right box (if you know anime name)</Paragraph>
+            <Button disabled={loading} loading={loading} style={{ marginTop: '20px' }} onClick={handleSubmit} type="primary">Search</Button>
             <br />
             <br />
             <Switch disabled={loading} checked={blackBorder} onChange={_ => setBlackBorder(!blackBorder)} /> <Text type="secondary">Cut Black Border</Text>

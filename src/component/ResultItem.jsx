@@ -17,8 +17,6 @@ function ResultItem({ anilist, episode, filename, from, image, similarity, to, v
         </div>
     )
 
-    console.log(english, native, romaji, synonyms)
-
 
     const toTime = (second) => {
         second = parseInt(second)

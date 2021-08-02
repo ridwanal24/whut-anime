@@ -1,14 +1,54 @@
 import { Menu, Typography, Card, Tabs, Row, Col } from 'antd'
 import Layout, { Content, Footer, Header } from 'antd/lib/layout/layout'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ImageFile from '../component/ImageFile'
 import ImageUrl from '../component/ImageUrl'
 import ResultItem from '../component/ResultItem'
 
 function Main() {
     const { Text, Link, Title } = Typography
+    const [anilist, setAnilist] = useState([])
+    const [anilistId, setAnilistId] = useState('')
     const [loading, setLoading] = useState(false)
     const [result, setResult] = useState([])
+
+    const fetchAnilist = async (search) => {
+        setLoading(true)
+        const query = `{
+                            Page(page:1, perPage:100){
+                                media(type:ANIME,search: "${search}", sort:ID) {
+                                    id
+                                    title {
+                                        romaji
+                                        english
+                                        native
+                                    }
+                                }
+                            }
+                        }`
+        const opt = {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                query: query
+            })
+        }
+        try {
+            const res = await fetch('https://graphql.anilist.co', opt)
+            const data = await res.json()
+
+            setAnilist(data.data.Page.media)
+            console.log(data.data.Page.media)
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setLoading(false)
+        }
+    }
+
 
     return (
         <div>
@@ -28,10 +68,10 @@ function Main() {
                             <Card style={{ minHeight: '75vh' }}>
                                 <Tabs defaultActiveKey="upload" centered>
                                     <Tabs.TabPane disabled={loading} tab="Upload Image" key="upload">
-                                        <ImageFile loading={loading} setResult={setResult} setLoading={setLoading} />
+                                        <ImageFile anilistId={anilistId} setAnilistId={setAnilistId} anilist={anilist} setAnilist={setAnilist} fetchAnilist={fetchAnilist} loading={loading} setResult={setResult} setLoading={setLoading} />
                                     </Tabs.TabPane>
                                     <Tabs.TabPane disabled={loading} tab="From URL" key="url">
-                                        <ImageUrl loading={loading} setResult={setResult} setLoading={setLoading} />
+                                        <ImageUrl anilistId={anilistId} setAnilistId={setAnilistId} anilist={anilist} setAnilist={setAnilist} fetchAnilist={fetchAnilist} loading={loading} setResult={setResult} setLoading={setLoading} />
                                     </Tabs.TabPane>
                                 </Tabs>
                             </Card>

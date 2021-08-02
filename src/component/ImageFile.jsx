@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { Button, Typography, message, Switch } from 'antd'
+import { Button, Typography, message, Switch, Input, Select } from 'antd'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import FormData from 'form-data'
+import Paragraph from 'antd/lib/typography/Paragraph'
 
-function ImageFile({ loading, setLoading, setResult }) {
+function ImageFile({ loading, setLoading, setResult, anilist, setAnilist, anilistId, setAnilistId, fetchAnilist }) {
+    const { Option } = Select
     const { Text } = Typography
     const [imgUrl, setImgUrl] = useState('')
     const [imgObj, setImgObj] = useState('')
@@ -52,6 +54,10 @@ function ImageFile({ loading, setLoading, setResult }) {
         const formData = new FormData()
         formData.append('image', imgObj)
         formData.append('cutBorder', blackBorder)
+        if (anilistId) {
+            formData.append('anilistID', anilistId)
+        }
+        console.log(anilistId)
         try {
             const res = await fetch('https://api.trace.moe/search?anilistInfo', {
                 method: 'post',
@@ -79,7 +85,6 @@ function ImageFile({ loading, setLoading, setResult }) {
                     !imgUrl ? (
                         <React.Fragment>
                             <PlusOutlined style={{ fontSize: '1.5rem', color: '#C5C5C5' }} />
-
                             <Text style={{ display: 'block', marginTop: '-20vw', fontSize: '0.5rem' }} type="secondary" italic>Choose image</Text>
                         </React.Fragment>
                     ) : (
@@ -88,7 +93,19 @@ function ImageFile({ loading, setLoading, setResult }) {
                 }
             </div>
             <input disabled={loading} type="file" onChange={handleChange} style={{ display: 'none' }} name="choose_image" />
-            <Button disabled={loading} style={{ marginTop: '20px' }} onClick={handleSubmit} type="primary">Search</Button>
+            <Input onChange={e => fetchAnilist(e.target.value)} style={{ width: '20vw' }} placeholder="Type here for search anime name" />
+            <Select disabled={loading} loading={loading} onSelect={e => setAnilistId(e)} style={{ marginTop: '20px', marginBottom: '10px', width: '20vw' }} >
+                {
+                    !anilist ? (
+                        <Option disabled>Type for search</Option>
+                    ) : (
+                        anilist.map(item => <Option value={item.id} >{item.title.romaji}</Option>)
+                    )
+                }
+            </Select>
+            <Paragraph type="secondary" >Type anime name then select from right box (if you know anime name)</Paragraph>
+            <br />
+            <Button disabled={loading} loading={loading} onClick={handleSubmit} type="primary">Search</Button>
             <br />
             <br />
             <Switch disabled={loading} checked={blackBorder} onChange={_ => setBlackBorder(!blackBorder)} /> <Text type="secondary">Cut Black Border</Text>
